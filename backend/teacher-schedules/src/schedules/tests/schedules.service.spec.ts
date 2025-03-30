@@ -34,22 +34,22 @@ describe('SchedulesService', () => {
     it('should throw BadRequestException if schedule already exists', () => {
       const createScheduleDto = {
         id: 1,
-        diaDeAtendimento: 'Tuesday',
-        predio: 1,
-        sala: 4,
-        nomeDoProfessor: 'John Doe',
-        horarioDeAtendimento: '10:00-12:00',
-        periodo: 'Morning',
+        dayOfService: 'Tuesday',
+        building: 1,
+        room: 4,
+        professorName: 'John Doe',
+        serviceTime: '10:00-12:00',
+        period: 'Morning',
       };
       jest.spyOn(storageServiceMock, 'getAllSchedules').mockReturnValue([
         {
           id: 1,
-          diaDeAtendimento: 'Tuesday',
-          predio: 1,
-          sala: 4,
-          nomeDoProfessor: 'John Doe',
-          horarioDeAtendimento: '10:00-12:00',
-          periodo: 'Morning',
+          dayOfService: 'Tuesday',
+          building: 1,
+          room: 4,
+          professorName: 'John Doe',
+          serviceTime: '10:00-12:00',
+          period: 'Morning',
         },
       ]);
 
@@ -61,12 +61,12 @@ describe('SchedulesService', () => {
     it('should add a new schedule if no conflict exists', () => {
       const createScheduleDto = {
         id: 1,
-        diaDeAtendimento: 'Tuesday',
-        predio: 1,
-        sala: 4,
-        nomeDoProfessor: 'John Doe',
-        horarioDeAtendimento: '10:00-12:00',
-        periodo: 'Morning',
+        dayOfService: 'Tuesday',
+        building: 1,
+        room: 4,
+        professorName: 'John Doe',
+        serviceTime: '10:00-12:00',
+        period: 'Morning',
       };
       jest.spyOn(storageServiceMock, 'getAllSchedules').mockReturnValue([]);
       jest
@@ -81,15 +81,15 @@ describe('SchedulesService', () => {
       );
     });
 
-    it('should throw BadRequestException if sala does not match predio', () => {
+    it('should throw BadRequestException if room does not match building', () => {
       const createScheduleDto = {
         id: 1,
-        diaDeAtendimento: 'Monday',
-        predio: 2, // Incorrect building for room 3
-        sala: 3,
-        nomeDoProfessor: 'John Doe',
-        horarioDeAtendimento: '10:00-12:00',
-        periodo: 'Morning',
+        dayOfService: 'Monday',
+        building: 2, // Incorrect building for room 3
+        room: 3,
+        professorName: 'John Doe',
+        serviceTime: '10:00-12:00',
+        period: 'Morning',
       };
 
       expect(() => service.create(createScheduleDto)).toThrow(
@@ -97,15 +97,15 @@ describe('SchedulesService', () => {
       );
     });
 
-    it('should create a schedule if sala matches predio', () => {
+    it('should create a schedule if room matches building', () => {
       const createScheduleDto = {
         id: 1,
-        diaDeAtendimento: 'Monday',
-        predio: 1, // Correct building for room 3
-        sala: 3,
-        nomeDoProfessor: 'John Doe',
-        horarioDeAtendimento: '10:00-12:00',
-        periodo: 'Morning',
+        dayOfService: 'Monday',
+        building: 1, // Correct building for room 3
+        room: 3,
+        professorName: 'John Doe',
+        serviceTime: '10:00-12:00',
+        period: 'Morning',
       };
       jest.spyOn(storageServiceMock, 'getAllSchedules').mockReturnValue([]);
       jest
@@ -126,21 +126,21 @@ describe('SchedulesService', () => {
       const schedules = [
         {
           id: 1,
-          diaDeAtendimento: 'Monday',
-          predio: 1,
-          sala: 3,
-          nomeDoProfessor: 'Jane Doe',
-          horarioDeAtendimento: '09:00-11:00',
-          periodo: 'Morning',
+          dayOfService: 'Monday',
+          building: 1,
+          room: 3,
+          professorName: 'Jane Doe',
+          serviceTime: '09:00-11:00',
+          period: 'Morning',
         },
         {
           id: 2,
-          diaDeAtendimento: 'Tuesday',
-          predio: 1,
-          sala: 2,
-          nomeDoProfessor: 'John Smith',
-          horarioDeAtendimento: '14:00-16:00',
-          periodo: 'Afternoon',
+          dayOfService: 'Tuesday',
+          building: 1,
+          room: 2,
+          professorName: 'John Smith',
+          serviceTime: '14:00-16:00',
+          period: 'Afternoon',
         },
       ];
       jest
@@ -158,12 +158,12 @@ describe('SchedulesService', () => {
     it('should return a schedule by id', () => {
       const schedule = {
         id: 2,
-        diaDeAtendimento: 'Tuesday',
-        predio: 1,
-        sala: 2,
-        nomeDoProfessor: 'John Smith',
-        horarioDeAtendimento: '14:00-16:00',
-        periodo: 'Afternoon',
+        dayOfService: 'Tuesday',
+        building: 1,
+        room: 2,
+        professorName: 'John Smith',
+        serviceTime: '14:00-16:00',
+        period: 'Afternoon',
       };
       jest.spyOn(storageServiceMock, 'findSchedule').mockReturnValue(schedule);
 
@@ -186,12 +186,12 @@ describe('SchedulesService', () => {
     it('should remove a schedule by id', () => {
       const schedule = {
         id: 1,
-        diaDeAtendimento: 'Tuesday',
-        predio: 1,
-        sala: 2,
-        nomeDoProfessor: 'John Smith',
-        horarioDeAtendimento: '14:00-16:00',
-        periodo: 'Afternoon',
+        dayOfService: 'Tuesday',
+        building: 1,
+        room: 2,
+        professorName: 'John Smith',
+        serviceTime: '14:00-16:00',
+        period: 'Afternoon',
       };
       jest.spyOn(storageServiceMock, 'removeSchedule').mockReturnValue([]);
       jest.spyOn(storageServiceMock, 'findSchedule').mockReturnValue(schedule);

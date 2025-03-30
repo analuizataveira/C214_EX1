@@ -11,19 +11,19 @@ import { StorageService } from '../local-db/local-db.service';
 export class SchedulesService {
   constructor(private readonly storageService: StorageService) {}
   create(createScheduleDto: CreateScheduleDto) {
-    const { sala, predio } = createScheduleDto;
+    const { room, building } = createScheduleDto;
 
-    if (sala >= 1 && sala <= 5 && predio !== 1) {
+    if (room >= 1 && room <= 5 && building !== 1) {
       throw new BadRequestException('Rooms 1-5 must belong to building 1');
-    } else if (sala >= 6 && sala <= 10 && predio !== 2) {
+    } else if (room >= 6 && room <= 10 && building !== 2) {
       throw new BadRequestException('Rooms 6-10 must belong to building 2');
-    } else if (sala >= 11 && sala <= 15 && predio !== 3) {
+    } else if (room >= 11 && room <= 15 && building !== 3) {
       throw new BadRequestException('Rooms 11-15 must belong to building 3');
-    } else if (sala >= 16 && sala <= 20 && predio !== 4) {
+    } else if (room >= 16 && room <= 20 && building !== 4) {
       throw new BadRequestException('Rooms 16-20 must belong to building 4');
-    } else if (sala >= 21 && sala <= 25 && predio !== 5) {
+    } else if (room >= 21 && room <= 25 && building !== 5) {
       throw new BadRequestException('Rooms 21-25 must belong to building 5');
-    } else if (sala >= 26 && sala <= 30 && predio !== 6) {
+    } else if (room >= 26 && room <= 30 && building !== 6) {
       throw new BadRequestException('Rooms 26-30 must belong to building 6');
     }
 
@@ -31,9 +31,9 @@ export class SchedulesService {
 
     const alreadyScheduled = schedulesOnBuilding.find((schedule) => {
       if (
-        schedule.diaDeAtendimento === createScheduleDto.diaDeAtendimento &&
-        schedule.predio === createScheduleDto.predio &&
-        schedule.sala === createScheduleDto.sala
+        schedule.dayOfService === createScheduleDto.dayOfService &&
+        schedule.building === createScheduleDto.building &&
+        schedule.room === createScheduleDto.room
       ) {
         return schedule;
       }
