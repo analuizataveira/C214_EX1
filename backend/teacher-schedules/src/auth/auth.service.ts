@@ -1,14 +1,37 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
-import { StorageService } from 'src/local-db/local-db.service';
+import { StorageService } from '../local-db/local-db.service';
 
 @Injectable()
 export class AuthService {
   constructor(private readonly storageService: StorageService) {}
 
-  create(createAuthDto: CreateAuthDto) {
-    return this.storageService.addUser(createAuthDto);
+  signup({ email, password }: CreateAuthDto) {
+    const user = this.storageService.findUser(email);
+
+    if (user) {
+      throw new BadRequestException('User already exists');
+    }
+
+    return this.storageService.addUser({ email, password });
+  }
+
+  singin({ email, password }: CreateAuthDto) {
+    const user = this.storageService.findUser(email);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    if (password !== user.password) {
+      throw new BadRequestException('Password does not match');
+    }
+
+    return user;
   }
 
   findAll() {
@@ -19,8 +42,14 @@ export class AuthService {
     return this.storageService.findUser(email);
   }
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return this.storageService.getAllUsers();
+  update(email: string, password: string) {
+    const user = this.storageService.findUser(email);
+
+    if (!user) {
+      throw new NotFoundException('User not found!');
+    }
+
+    return this.storageService.updateUser(email, password);
   }
 
   remove(email: string) {

@@ -1,8 +1,9 @@
 export type Schedule = {
   id: number;
-  nomeDoProfessor: string;
-  horarioDeAtendimento: string;
-  periodo: string;
-  sala: number;
-  predio: number;
+  professorName: string;
+  dayOfService: string;
+  serviceTime: string;
+  period: string;
+  room: number;
+  building: number;
 };

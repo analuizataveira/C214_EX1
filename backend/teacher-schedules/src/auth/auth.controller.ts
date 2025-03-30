@@ -9,15 +9,19 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+  @Post('singup')
+  singup(@Body() createAuthDto: CreateAuthDto) {
+    return this.authService.signup(createAuthDto);
+  }
+
+  @Post('singin')
+  singin(@Body() createAuthDto: CreateAuthDto) {
+    return this.authService.singin(createAuthDto);
   }
 
   @Get()
@@ -30,9 +34,9 @@ export class AuthController {
     return this.authService.findOne(email);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
+  @Patch(':email')
+  update(@Param('email') email: string, @Body() password: string) {
+    return this.authService.update(email, password);
   }
 
   @Delete(':email')
