@@ -31,6 +31,10 @@ Aplicação completa para gerenciamento de horários de professores, com API bac
    ```bash
    npm run start:dev
    ```
+4. Execute os testes:
+   ```bash
+   npm run test
+   ```
 
 ## 💻 Frontend
 
@@ -47,4 +51,3 @@ Aplicação completa para gerenciamento de horários de professores, com API bac
    cd src/__tests__    # Navega até a pasta de testes
    npm test            # Executa os testes
    ```
-
