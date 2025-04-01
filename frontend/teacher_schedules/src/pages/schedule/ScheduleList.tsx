@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getSchedule } from "../../services/ScheduleService";
+import { getSchedules } from "../../services/ScheduleService";
 import { Schedule } from "../../interfaces/ScheduleInterface";
 
 
@@ -7,7 +7,7 @@ export function ScheduleList() {
 
     const [scheduleList, setScheduleList] = useState<Array<Schedule>>([])
     const refreshSchedule = async () => {
-        await getSchedule().then((scheduleList) => {
+        await getSchedules().then((scheduleList) => {
             setScheduleList(scheduleList != null ? [...scheduleList] : [])
         });
     };
