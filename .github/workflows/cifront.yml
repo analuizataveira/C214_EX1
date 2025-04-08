@@ -65,6 +65,5 @@ jobs:
       - name: Enviar e-mail com script
         run: .github/scripts/send_email.sh
         env:
-          DESTINATARIO: ${{ secrets.EMAIL_DESTINATARIO }}
-          ASSUNTO: "Pipeline Frontend Finalizada"
-          MENSAGEM: "Os testes e o build do frontend foram executados com sucesso."
+          EMAIL_DESTINATARIO: ${{ secrets.EMAIL_DESTINATARIO }}
+      
