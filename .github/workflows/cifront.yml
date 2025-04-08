@@ -9,7 +9,7 @@ on:
 jobs:
   frontend-tests:
     runs-on: ubuntu-latest
-    name: Test
+    name: Frontend Tests
     steps:
       - uses: actions/checkout@v3
 
@@ -28,7 +28,7 @@ jobs:
 
   frontend-build:
     runs-on: ubuntu-latest
-    name: Build do Frontend
+    name: Frontend Build
     needs: frontend-tests
     steps:
       - uses: actions/checkout@v3
@@ -42,7 +42,7 @@ jobs:
         working-directory: frontend/teacher_schedules
         run: npm install
 
-      - name: Build
+      - name: Executar build
         working-directory: frontend/teacher_schedules
         run: npm run build
 
@@ -51,3 +51,20 @@ jobs:
         with:
           name: build-frontend
           path: frontend/teacher_schedules/dist/
+
+  notify:
+    runs-on: ubuntu-latest
+    name: Enviar notificação por e-mail
+    needs: [frontend-tests, frontend-build]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Instalar mailutils
+        run: sudo apt-get update && sudo apt-get install -y mailutils
+
+      - name: Enviar e-mail com script
+        run: .github/scripts/send_email.sh
+        env:
+          DESTINATARIO: ${{ secrets.EMAIL_DESTINATARIO }}
+          ASSUNTO: "Pipeline Frontend Finalizada"
+          MENSAGEM: "Os testes e o build do frontend foram executados com sucesso."
