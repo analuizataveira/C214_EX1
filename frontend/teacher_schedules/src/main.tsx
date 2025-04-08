@@ -11,21 +11,26 @@ createRoot(document.getElementById("root")!).render(
     <Routes>
       <Route path="/" element={<LoginForm />} />
       <Route path="/login" element={<LoginForm />} />
-      <Route path="/schedulelist" element={<ScheduleList/>} />
+      <Route path="/schedulelist" element={<ScheduleList />} />
       <Route path="/createuser" element={<UserForm />} />
-      <Route 
-        path="/createschedule" 
+      <Route
+        path="/createschedule"
         element={
-          <ScheduleForm 
-            nomeDoProfessor="" 
-            horarioDeAtendimento="" 
-            periodo="" 
-            sala={0}  // Alterado para número
-            predio={1}  // Alterado para número
-            onSubmit={() => {}} 
-            onCancel={() => {}} 
+          <ScheduleForm
+            schedule={{
+            professorName: "" ,
+            dayOfService: "",
+            serviceTime: "" ,
+            period: "" ,
+            room:0 , // Alterado para número
+            building:1,  // Alterado para número
+            id:0
+            }}
+            onSubmit={() => { }}
+            onCancel={() => { }}
+
           />
-        } 
+        }
       />
     </Routes>
   </BrowserRouter>
