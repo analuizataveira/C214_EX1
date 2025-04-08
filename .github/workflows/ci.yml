@@ -47,7 +47,7 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: ./backend/teacher-schedules/node_modules
+          path: backend/teacher-schedules/node_modules
           key: modules-${{ hashFiles('**/package.json') }}
       - name: Lint
         run: npm run lint
@@ -67,7 +67,7 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: ./backend/teacher-schedules/node_modules
+          path: backend/teacher-schedules/node_modules
           key: modules-${{ hashFiles('**/package.json') }}
       - name: Tests
         run: npm run test
