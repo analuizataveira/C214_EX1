@@ -71,10 +71,8 @@ jobs:
           key: modules-${{ hashFiles('**/package.json') }}
       - name: Tests
         run: npm run test
-      - run: mkdir -p  test-report
-      - run: touch test-report/report.html
       - name: Upload Test Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: test-report
-          path: test-report/report.html
+          path: ./report.html
