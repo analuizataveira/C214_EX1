@@ -9,7 +9,7 @@ on:
 jobs:
   frontend-tests:
     runs-on: ubuntu-latest
-    name: Testar Frontend
+    name: Test
     steps:
       - uses: actions/checkout@v3
 
@@ -42,12 +42,12 @@ jobs:
         working-directory: frontend/teacher_schedules
         run: npm install
 
-      - name: Executar build
+      - name: Build
         working-directory: frontend/teacher_schedules
         run: npm run build
 
       - name: Salvar artefato de build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-frontend
           path: frontend/teacher_schedules/dist/
