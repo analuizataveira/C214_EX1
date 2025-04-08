@@ -1,0 +1,53 @@
+name: Frontend CI/CD
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  frontend-tests:
+    runs-on: ubuntu-latest
+    name: Testar Frontend
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependências
+        working-directory: frontend/teacher_schedules
+        run: npm install
+
+      - name: Executar testes
+        working-directory: frontend/teacher_schedules/src/__tests__
+        run: npm test
+
+  frontend-build:
+    runs-on: ubuntu-latest
+    name: Build do Frontend
+    needs: frontend-tests
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependências
+        working-directory: frontend/teacher_schedules
+        run: npm install
+
+      - name: Executar build
+        working-directory: frontend/teacher_schedules
+        run: npm run build
+
+      - name: Salvar artefato de build
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-frontend
+          path: frontend/teacher_schedules/dist/
