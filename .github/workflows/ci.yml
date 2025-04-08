@@ -71,10 +71,10 @@ jobs:
           key: modules-${{ hashFiles('**/package.json') }}
       - name: Tests
         run: npm run test
-      - run: mkdir -p  backend/teacher-schedules/test-report
-      - run: touch backend/teacher-schedules/test-report/report.html
+      - run: mkdir -p  test-report
+      - run: touch test-report/report.html
       - name: Upload Test Report
         uses: actions/upload-artifact@v4
         with:
           name: test-report
-          path: backend/teacher-schedules/test-report/report.html
+          path: test-report/report.html
