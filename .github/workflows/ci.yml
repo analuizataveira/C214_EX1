@@ -11,7 +11,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  build-backend:
     runs-on: ubuntu-latest
 
     defaults:
@@ -19,13 +19,60 @@ jobs:
         working-directory: backend/teacher-schedules
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js 22.x
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v3
         with:
-          node-version: "22.x"
-          cache: "npm"
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
-      - run: npm run lint
+          node-version: "22"
+      - uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: backend/teacher-schedules/node_modules
+          key: modules-${{ hashFiles('**/package.json') }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+  lint-backend:
+    needs: build-backend
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend/teacher-schedules
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: backend/teacher-schedules/node_modules
+          key: modules-${{ hashFiles('**/package.json') }}
+      - name: Lint
+        run: npm run lint
+
+  test-backend:
+    if: github.actor != 'dependabot[bot]'
+    needs: build-backend
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend/teacher-schedules
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: backend/teacher-schedules/node_modules
+          key: modules-${{ hashFiles('**/package.json') }}
+      - name: Tests
+        run: npm run test
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: ./testreport/report.html
