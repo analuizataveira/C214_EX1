@@ -11,6 +11,11 @@ jobs:
   frontend-tests:
     runs-on: ubuntu-latest
     name: Frontend Tests
+
+    defaults:
+      run:
+        working-directory: frontend/teacher_schedules
+
     steps:
       - uses: actions/checkout@v3
 
@@ -20,17 +25,22 @@ jobs:
           node-version: "18"
 
       - name: Instalar dependências
-        working-directory: frontend/teacher_schedules
         run: npm install
 
       - name: Executar testes
-        working-directory: frontend/teacher_schedules/src/__tests__
         run: npm test
+
+      - name: Upload do relatório de testes
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-test-report
+          path: frontend/teacher_schedules/test-report/report.html
 
   frontend-build:
     runs-on: ubuntu-latest
     name: Frontend Build
     needs: frontend-tests
+
     steps:
       - uses: actions/checkout@v3
 
@@ -57,11 +67,14 @@ jobs:
     runs-on: ubuntu-latest
     name: Enviar notificação por e-mail
     needs: [frontend-tests, frontend-build]
+
     steps:
       - uses: actions/checkout@v3
+
       - name: Dar permissão de execução ao script
         run: chmod +x .github/scripts/send_email.sh
+
       - name: Enviar e-mail com script
         run: .github/scripts/send_email.sh
         env:
-          EMAIL_DESTINATARIO: ${{secrets.EMAIL_DESTINATARIO}}
+          EMAIL_DESTINATARIO: ${{ secrets.EMAIL_DESTINATARIO }}
