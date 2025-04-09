@@ -17,7 +17,7 @@ jobs:
       - name: Instalar Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Instalar dependências
         working-directory: frontend/teacher_schedules
@@ -37,7 +37,7 @@ jobs:
       - name: Instalar Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Instalar dependências
         working-directory: frontend/teacher_schedules
@@ -59,13 +59,8 @@ jobs:
     needs: [frontend-tests, frontend-build]
     steps:
       - uses: actions/checkout@v3
-
-      - name: Instalar mailutils
-        run: sudo apt-get update && sudo apt-get install -y mailutils
-
       - name: Dar permissão de execução ao script
         run: chmod +x .github/scripts/send_email.sh
-
       - name: Enviar e-mail com script
         run: .github/scripts/send_email.sh
         env:
