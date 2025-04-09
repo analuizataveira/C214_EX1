@@ -1,6 +1,7 @@
 # Sistema de Agendamento de Professores
 
 Aplicação completa para gerenciamento de horários de professores, com API backend e interface frontend.
+Alunos: Ana Luiza Taveira e Rafael Carolino
 
 ## 📋 Pré-requisitos
 
