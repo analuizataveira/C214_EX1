@@ -32,6 +32,7 @@ jobs:
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm install
+      - run: npm run build
       - name: Upload Build
         uses: actions/upload-artifact@v4
         with:
@@ -80,4 +81,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-report
-          path: ./backend/teacher-schedules/report.html
+          path: ./backend/teacher-schedules/test-report/report.html
