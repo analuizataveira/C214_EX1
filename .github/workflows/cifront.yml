@@ -60,8 +60,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Instalar mailutils
-        run: sudo apt-get update && sudo apt-get install -y mailutils
+      - name: Instalar sendemail
+        run: sudo apt-get update && sudo apt-get install -y sendemail libio-socket-ssl-perl libnet-ssleay-perl
 
       - name: Dar permissão de execução ao script
         run: chmod +x .github/scripts/send_email.sh
@@ -69,5 +69,7 @@ jobs:
       - name: Enviar e-mail com script
         run: .github/scripts/send_email.sh
         env:
-          EMAIL_DESTINATARIO: ${{ secrets.EMAIL_DESTINATARIO }}
+          EMAIL_DESTINATARIO: ${{secrets.EMAIL_DESTINATARIO}}
+          SMTP_USUARIO: ${{secrets.SMTP_USUARIO}}
+          SMTP_SENHA: ${{secrets.SMTP_SENHA}}
       
